@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagment | KD Arts Photography</title>
+    <style>
+body {
+    display:grid;
+    place-content:center;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    overflow:hidden;
+    width: 100vw;
+    background: url(images/background/background2.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.w {
+  width:100vmin;
+  height:80vmin;
+}
+
+.ts {
+  width:100%; height:100%;
+  position:relative;
+  --barH:10%;/*active zone height = 100% - barH*/
+}
+
+.t {
+  --w:20%;
+  display:block; width:var(--w); height:var(--barH);
+  position:absolute; bottom:0; left:var(--l);
+  transform-origin:top left;
+}
+
+.t img {
+  display:block; width:100%; height:100%;
+  object-fit:cover;
+  transform:scale(0.8);
+}
+
+[type="radio"] { 
+  display:none; 
+}
+
+:checked + label.t {
+  left:0; bottom:var(--barH);
+  height:calc(100% - var(--barH));
+}
+
+:checked + label.t img {
+  object-fit:contain;
+}
+
+/* 
+optional
+*/
+
+.ts {/*thumbnails bar*/
+  perspective:100px;
+  perspective-origin:center center;
+  transform-style:preserve-3d;
+  pointer-events:none;
+}
+
+.ts:after {/*the plate*/
+  content:"";
+  display:block; width:100%; height:15px;
+  position:absolute; bottom:0;
+  background:linear-gradient(transparent 20%, rgba(0,0,0,0.1));
+  transform:rotateX(90deg)scaleX(1.2);
+  transform-origin:bottom center;
+}
+
+:not(:checked) + .t {/*inactive labels*/
+  transform:translate3d(0, 0, -5px);
+  pointer-events:auto;
+}
+
+:not(:checked) + .t:hover {
+  transform:translate3d(0, -7px, -5px);
+  box-shadow:0 30px 30px -25px rgba(0,0,0,0.3);
+  cursor:pointer;
+}
+
+:not(:checked) + .t img {
+  transform:scale(0.9);/*create gaps*/
+}
+
+:checked + .t {/*active label*/
+  box-shadow:0 0 0 transparent;
+  animation:anim 2s 1;
+} @keyframes anim {
+  from { transform:rotateY(6deg)rotateX(3deg) }
+}
+
+/* 
+transitions
+*/
+.t {/*active->inactive & hover->rest*/
+  transition:transform 0.5s, bottom 0.6s, left 0.6s, width 0.3s, box-shadow 1s;
+}
+.t:hover, :checked + .t {
+  transition:transform 0.5s, bottom 0.6s, left 0.6s, width 0.3s, box-shadow 0s;
+}
+button{
+    position: absolute;
+    top: 9%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+    width: 8vw;
+    height: 3vw;
+    border-radius:22px ;
+    font-size: 18px;
+    cursor: pointer;
+    background: black;
+    color: white;
+}
+button:hover{
+    background: rgb(27, 26, 26);
+}
+    </style>
+</head>
+<body>
+    <a href="index.html"><button>Back</button></a>
+    <h1 style="margin-left: 30%; color: white;">Wedding Photography</h1>
+    <div class="w">
+        <div class="ts">
+          <input type="radio" id="c1" name="ts" checked>
+          <label class="t" for="c1"><img src="https://i.ibb.co/g9tvRSS/DSC-0164.jpg" alt="DSC-0164" border="0"></label>
+          <input type="radio" id="c2" name="ts">
+          <label class="t" for="c2"><img src="https://i.ibb.co/84v9q6C/DSC-0247.jpg" alt="DSC-0247" border="0"></label>
+          <input type="radio" id="c3" name="ts">
+          <label class="t" for="c3"><img src="https://i.ibb.co/qBwcJbG/DSC-0275.jpg" alt="DSC-0275" border="0"></label>
+          <input type="radio" id="c4" name="ts">
+          <label class="t" for="c4"><img src="https://i.ibb.co/xX6XXQB/DSC-0293.jpg" alt="DSC-0293" border="0"></label>
+          <input type="radio" id="c5" name="ts">
+          <label class="t" for="c5"><img src="https://i.ibb.co/C0fmRVY/DSC-0301.jpg" alt="DSC-0301" border="0"></label>
+          <input type="radio" id="c6" name="ts">
+          <label class="t" for="c6"><img src="https://i.ibb.co/wKDWqyJ/DSC-0313.jpg" alt="DSC-0313" border="0"></label>
+          <input type="radio" id="c7" name="ts">
+          <label class="t" for="c7"><img src="https://i.ibb.co/qkWRRyN/DSC-0329.jpg" alt="DSC-0329" border="0"></label>
+          <input type="radio" id="c8" name="ts">
+          <label class="t" for="c8"><img src="https://i.ibb.co/pjPz4mg/DSC-0337.jpg" alt="DSC-0337" border="0"></label>
+        </div>
+      </div>
+      
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+  const radioButtons = document.querySelectorAll('input[type="radio"]');
+  radioButtons.forEach(function(radioButton) {
+    radioButton.addEventListener("change", function() {
+      const checkedRadioButton = document.querySelector('input[type="radio"]:checked');
+      const imageSource = checkedRadioButton.nextElementSibling.querySelector("img").src;
+      console.log(imageSource);
+    });
+  });
+});
+
+</script>
+<script>
+    const els = document.querySelectorAll("[type='radio']");
+for (const el of els)
+  el.addEventListener("input", e => reorder(e.target, els));
+reorder(els[0], els);
+
+function reorder(targetEl, els) {
+  const nItems = els.length;
+  let processedUncheck = 0;
+  for (const el of els) {
+    const containerEl = el.nextElementSibling;
+    if (el === targetEl) {//checked radio
+      containerEl.style.setProperty("--w", "100%");
+      containerEl.style.setProperty("--l", "0");
+    }
+    else {//unchecked radios
+      containerEl.style.setProperty("--w", `${100/(nItems-1)}%`);
+      containerEl.style.setProperty("--l", `${processedUncheck * 100/(nItems-1)}%`);
+      processedUncheck += 1;
+    }
+  }
+}
+
+</script>
+</html>

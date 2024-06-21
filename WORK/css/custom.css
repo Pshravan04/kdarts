@@ -1,0 +1,7 @@
+/* Your custom css code goes here */
+@media (max-width:700px) {
+    
+.img-bg{
+    background-position: top;
+}
+}
